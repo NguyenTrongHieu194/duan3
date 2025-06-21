@@ -98,6 +98,7 @@
     <div id="app-root">
         <!-- Hero Section -->
         <section
+            id="hero-section"
             class="relative h-screen flex flex-col items-center justify-center text-white text-center p-4 bg-gradient-to-br from-indigo-700 to-purple-900 overflow-hidden"
         >
             <div class="absolute inset-0 z-0 opacity-20" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
@@ -118,7 +119,7 @@
         </section>
 
         <!-- About Us section -->
-        <section class="container mx-auto bg-white rounded-2xl shadow-xl p-8 mb-12 -mt-16 relative z-20 transform transition-all duration-500 hover:scale-[1.01] lg:max-w-screen-xl 2xl:max-w-screen-2xl">
+        <section id="about-us-section" class="container mx-auto bg-white rounded-2xl shadow-xl p-8 mb-12 -mt-16 relative z-20 transform transition-all duration-500 hover:scale-[1.01] lg:max-w-screen-xl 2xl:max-w-screen-2xl">
             <h2 class="text-4xl font-bold text-center mb-6 text-indigo-700">Về Chúng Tôi</h2>
             <div class="flex flex-col md:flex-row items-center gap-8">
                 <div class="md:w-1/2">
@@ -141,7 +142,7 @@
         </section>
 
         <!-- Search Bar -->
-        <div class="container mx-auto mb-8 px-4 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
+        <div id="search-bar-section" class="container mx-auto mb-8 px-4 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
             <input
                 type="text"
                 id="search-input"
@@ -152,7 +153,7 @@
         </div>
 
         <!-- Navigation Bar for categories (Responsive with Hamburger) -->
-        <nav class="container mx-auto bg-white rounded-2xl shadow-xl p-4 mb-12 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
+        <nav id="categories-nav-section" class="container mx-auto bg-white rounded-2xl shadow-xl p-4 mb-12 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
             <div class="md:hidden flex justify-end">
                 <button
                     id="nav-toggle"
@@ -189,10 +190,89 @@
             <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                 <!-- Service cards will be inserted here by JavaScript -->
             </div>
+
+            <!-- Service Detail View (Replaced Modal) -->
+            <div id="service-detail-view" class="bg-white rounded-2xl shadow-2xl p-8 mt-8 hidden animate-fadeIn">
+                <button
+                    id="back-to-services-button"
+                    class="mb-6 px-6 py-3 bg-gray-200 text-gray-800 font-bold rounded-full hover:bg-gray-300 transition-colors duration-200 flex items-center"
+                    aria-label="Quay lại danh sách dịch vụ"
+                >
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                    </svg>
+                    Quay lại
+                </button>
+
+                <h2 id="view-service-name" class="text-4xl font-bold text-gray-900 mb-6 text-center"></h2>
+                <div class="mb-6 rounded-lg overflow-hidden shadow-lg border border-gray-200">
+                    <img id="view-service-image" src="" alt="" class="w-full h-auto object-cover max-h-96" onerror="this.onerror=null; this.src='https://placehold.co/800x600/cccccc/333333?text=Khong+Tai+Duoc+Anh';" />
+                </div>
+                <p id="view-service-long-description" class="text-gray-700 text-lg leading-relaxed mb-8"></p>
+
+                <!-- AI Generate Key Benefits Button -->
+                <div class="text-center mb-8">
+                    <button
+                        id="generate-benefits-button"
+                        class="inline-flex items-center px-6 py-3 bg-blue-500 text-white font-bold rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-200 text-lg transform hover:scale-105"
+                    >
+                        <span id="generate-benefits-spinner" class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2 hidden"></span>
+                        <span id="generate-benefits-text">✨ Gợi ý Lợi ích chính ✨</span>
+                    </button>
+                </div>
+                <!-- Display Generated Benefits -->
+                <div id="generated-benefits-container" class="bg-gray-100 p-6 rounded-lg mb-8 shadow-inner animate-fadeInContent hidden">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Lợi ích chính:</h3>
+                    <div id="generated-benefits-content" class="prose max-w-none text-gray-700"></div>
+                </div>
+
+                <!-- Ask AI about this Service Section -->
+                <div class="bg-gray-50 p-6 rounded-lg mb-8 shadow-md">
+                    <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">Hỏi AI về dịch vụ này ✨</h3>
+                    <input
+                        type="text"
+                        id="specific-service-question-input"
+                        class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg mb-4"
+                        placeholder="Ví dụ: 'Dịch vụ này có hỗ trợ trả góp không?'"
+                    />
+                    <div class="text-center mb-4">
+                        <button
+                            id="ask-specific-service-button"
+                            class="inline-flex items-center px-6 py-3 bg-green-500 text-white font-bold rounded-full shadow-lg hover:bg-green-600 transition-colors duration-200 text-lg transform hover:scale-105"
+                        >
+                            <span id="ask-specific-service-spinner" class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2 hidden"></span>
+                            <span id="ask-specific-service-text">Hỏi AI</span>
+                        </button>
+                    </div>
+                    <div id="specific-service-answer-container" class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 animate-fadeInContent hidden">
+                        <h4 class="text-xl font-bold text-gray-900 mb-2">Trả lời từ AI:</h4>
+                        <p id="specific-service-answer-content" class="text-gray-700 text-lg"></p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center flex-wrap gap-4">
+                    <a
+                        id="call-service-button"
+                        href="tel:0363798989"
+                        class="inline-flex items-center px-8 py-4 bg-green-600 text-white font-bold rounded-full shadow-lg hover:bg-green-700 transition-colors duration-200 text-lg transform hover:scale-105"
+                    >
+                        <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
+                        </svg>
+                        Gọi Ngay Tư Vấn
+                    </a>
+                    <button
+                        id="close-service-view-bottom"
+                        class="inline-flex items-center px-8 py-4 bg-gray-200 text-gray-800 font-bold rounded-full shadow-lg hover:bg-gray-300 transition-colors duration-200 text-lg transform hover:scale-105"
+                    >
+                        Đóng
+                    </button>
+                </div>
+            </div>
         </main>
 
         <!-- Our Process Section -->
-        <section class="container mx-auto bg-white rounded-2xl shadow-xl p-8 mt-16 mb-12 text-center px-4 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
+        <section id="process-section" class="container mx-auto bg-white rounded-2xl shadow-xl p-8 mt-16 mb-12 text-center px-4 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
             <h2 class="text-4xl font-bold text-indigo-700 mb-10">Quy Trình Làm Việc Của Chúng Tôi</h2>
             <div id="process-steps-grid" class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <!-- Process steps will be inserted here by JavaScript -->
@@ -200,7 +280,7 @@
         </section>
 
         <!-- Testimonials Section -->
-        <section class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white p-8 mt-16 mb-12 relative overflow-hidden">
+        <section id="testimonials-section" class="bg-gradient-to-r from-indigo-600 to-purple-700 text-white p-8 mt-16 mb-12 relative overflow-hidden">
             <div class="container mx-auto relative z-10 px-4 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
                 <h2 class="text-4xl font-bold text-center mb-10">Khách Hàng Nói Gì Về Chúng Tôi</h2>
                 <div id="testimonials-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -211,7 +291,7 @@
         </section>
 
         <!-- FAQ Section -->
-        <section class="container mx-auto bg-white rounded-2xl shadow-xl p-8 mt-16 mb-12 px-4 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
+        <section id="faq-section" class="container mx-auto bg-white rounded-2xl shadow-xl p-8 mt-16 mb-12 px-4 lg:max-w-screen-xl 2xl:max-w-screen-2xl">
             <h2 class="text-4xl font-bold text-indigo-700 text-center mb-10">Câu Hỏi Thường Gặp</h2>
             <div id="faq-list" class="space-y-4 max-w-3xl mx-auto md:max-w-5xl lg:max-w-6xl">
                 <!-- FAQs will be inserted here by JavaScript -->
@@ -285,83 +365,6 @@
                 </div>
             </form>
         </section>
-
-        <!-- Service Detail Modal -->
-        <div id="service-detail-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 z-50 animate-fadeIn overflow-auto hidden">
-            <div class="bg-white rounded-2xl shadow-2xl max-w-3xl w-full p-8 relative animate-scaleIn transform scale-100 opacity-100 md:max-w-4xl lg:max-w-5xl xl:max-w-6xl">
-                <button
-                    id="close-service-modal"
-                    class="absolute top-4 right-4 text-gray-500 hover:text-gray-900 text-4xl font-bold transition-colors duration-200"
-                    aria-label="Đóng"
-                >
-                    &times;
-                </button>
-                <h2 id="modal-service-name" class="text-4xl font-bold text-gray-900 mb-6 text-center"></h2>
-                <div class="mb-6 rounded-lg overflow-hidden shadow-lg border border-gray-200">
-                    <img id="modal-service-image" src="" alt="" class="w-full h-auto object-cover max-h-96" onerror="this.onerror=null; this.src='https://placehold.co/800x600/cccccc/333333?text=Khong+Tai+Duoc+Anh';" />
-                </div>
-                <p id="modal-service-long-description" class="text-gray-700 text-lg leading-relaxed mb-8"></p>
-
-                <!-- AI Generate Key Benefits Button -->
-                <div class="text-center mb-8">
-                    <button
-                        id="generate-benefits-button"
-                        class="inline-flex items-center px-6 py-3 bg-blue-500 text-white font-bold rounded-full shadow-lg hover:bg-blue-600 transition-colors duration-200 text-lg transform hover:scale-105"
-                    >
-                        <span id="generate-benefits-spinner" class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2 hidden"></span>
-                        <span id="generate-benefits-text">✨ Gợi ý Lợi ích chính ✨</span>
-                    </button>
-                </div>
-                <!-- Display Generated Benefits -->
-                <div id="generated-benefits-container" class="bg-gray-100 p-6 rounded-lg mb-8 shadow-inner animate-fadeInContent hidden">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-3">Lợi ích chính:</h3>
-                    <div id="generated-benefits-content" class="prose max-w-none text-gray-700"></div>
-                </div>
-
-                <!-- Ask AI about this Service Section -->
-                <div class="bg-gray-50 p-6 rounded-lg mb-8 shadow-md">
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">Hỏi AI về dịch vụ này ✨</h3>
-                    <input
-                        type="text"
-                        id="specific-service-question-input"
-                        class="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 text-lg mb-4"
-                        placeholder="Ví dụ: 'Dịch vụ này có hỗ trợ trả góp không?'"
-                    />
-                    <div class="text-center mb-4">
-                        <button
-                            id="ask-specific-service-button"
-                            class="inline-flex items-center px-6 py-3 bg-green-500 text-white font-bold rounded-full shadow-lg hover:bg-green-600 transition-colors duration-200 text-lg transform hover:scale-105"
-                        >
-                            <span id="ask-specific-service-spinner" class="animate-spin rounded-full h-5 w-5 border-t-2 border-b-2 border-white mr-2 hidden"></span>
-                            <span id="ask-specific-service-text">Hỏi AI</span>
-                        </button>
-                    </div>
-                    <div id="specific-service-answer-container" class="bg-white p-4 rounded-lg shadow-sm border border-gray-200 animate-fadeInContent hidden">
-                        <h4 class="text-xl font-bold text-gray-900 mb-2">Trả lời từ AI:</h4>
-                        <p id="specific-service-answer-content" class="text-gray-700 text-lg"></p>
-                    </div>
-                </div>
-
-                <div class="flex justify-center flex-wrap gap-4">
-                    <a
-                        id="call-service-button"
-                        href="tel:0363798989"
-                        class="inline-flex items-center px-8 py-4 bg-green-600 text-white font-bold rounded-full shadow-lg hover:bg-green-700 transition-colors duration-200 text-lg transform hover:scale-105"
-                    >
-                        <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path>
-                        </svg>
-                        Gọi Ngay Tư Vấn
-                    </a>
-                    <button
-                        id="close-service-modal-bottom"
-                        class="inline-flex items-center px-8 py-4 bg-gray-200 text-gray-800 font-bold rounded-full shadow-lg hover:bg-gray-300 transition-colors duration-200 text-lg transform hover:scale-105"
-                    >
-                        Đóng
-                    </button>
-                </div>
-            </div>
-        </div>
 
         <!-- AI Chat Assistant Modal -->
         <div id="ai-chat-modal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 z-50 animate-fadeIn hidden">
@@ -554,6 +557,9 @@
             isAuthReady = true; // Mark as ready even if init failed to unblock UI
         }
 
+        // --- Base URL for Images ---
+        const BASE_IMAGE_REPO_URL = "https://github.com/NguyenTrongHieu194/duan3/blob/main/images/";
+
         // --- Data Definitions (from your React app) ---
         const services = [
             {
@@ -561,7 +567,7 @@
                 name: "Máy POS",
                 description: "Giải pháp thanh toán hiện đại, giúp bạn dễ dàng quản lý giao dịch và tối ưu hóa quy trình bán hàng.",
                 longDescription: "Máy POS (Point of Sale) của chúng tôi là thiết bị thanh toán tiên tiến, cho phép bạn chấp nhận thanh toán qua thẻ tín dụng/ghi nợ, ví điện tử một cách nhanh chóng và an toàn. Tích hợp phần mềm quản lý bán hàng, máy POS giúp bạn theo dõi doanh thu, quản lý kho hàng và in hóa đơn tức thì, tối ưu hóa quy trình vận hành cho mọi loại hình kinh doanh từ cửa hàng nhỏ đến chuỗi siêu thị. Các tính năng nổi bật: Quản lý giao dịch, báo cáo doanh thu, tích hợp tồn kho, hỗ trợ đa dạng phương thức thanh toán.",
-                imageUrl: "https://github.com/NguyenTrongHieu194/duan3/blob/main/images/may-pos.jpg?raw=true",
+                imageFileName: "may-pos.jpg", // Cập nhật tên file ảnh tại đây
                 category: "Giải pháp kinh doanh"
             },
             {
@@ -569,7 +575,7 @@
                 name: "Tingbox",
                 description: "Nâng tầm trải nghiệm kinh doanh của bạn với thiết bị đa năng này.",
                 longDescription: "Tingbox là một giải pháp tổng hợp, cung cấp các tính năng quản lý khách hàng (CRM), tự động hóa marketing, và phân tích dữ liệu hiệu quả. Nó giúp doanh nghiệp nhỏ và vừa dễ dàng tiếp cận công nghệ để nâng cao tương tác với khách hàng, tối ưu hóa chiến dịch quảng cáo, và đưa ra quyết định kinh doanh dựa trên dữ liệu chính xác, từ đó thúc đẩy tăng trưởng doanh thu. Lợi ích: Tăng hiệu suất, quản lý thông minh, tiết kiệm chi phí, hỗ trợ đa nền tảng.",
-                imageUrl: "https://github.com/NguyenTrongHieu194/duan3/blob/main/images/loa-tingbox.jpg?raw=true",
+                imageFileName: "loa-tingbox.jpg", // Cập nhật tên file ảnh tại đây
                 category: "Giải pháp kinh doanh"
             },
             {
@@ -577,7 +583,7 @@
                 name: "Rút tiền tín dụng",
                 description: "Đáp ứng nhu cầu tài chính cấp bách của bạn một cách nhanh chóng và an toàn.",
                 longDescription: "Dịch vụ rút tiền tín dụng của chúng tôi cho phép bạn nhanh chóng chuyển đổi hạn mức tín dụng từ thẻ của mình thành tiền mặt, đáp ứng các nhu cầu chi tiêu khẩn cấp. Với quy trình đơn giản, bảo mật cao và mức phí cạnh tranh, chúng tôi đảm bảo bạn có thể tiếp cận nguồn vốn cần thiết mà không gặp trở ngại. Đặc điểm: Thủ tục đơn giản, giải ngân nhanh chóng, bảo mật thông tin, hỗ trợ 24/7.",
-                imageUrl: "http://googleusercontent.com/image_generation_content/6",
+                imageFileName: "credit-withdrawal.jpg", // Ví dụ tên file ảnh
                 category: "Dịch vụ tài chính"
             },
             {
@@ -585,7 +591,7 @@
                 name: "Khoản vay tiêu dùng + thế chấp tài sản",
                 description: "Giải pháp tài chính linh hoạt, giúp bạn thực hiện các kế hoạch cá nhân hoặc kinh doanh với sự hỗ trợ từ tài sản thế chấp.",
                 longDescription: "Chúng tôi cung cấp các gói vay tiêu dùng linh hoạt, có hoặc không có tài sản thế chấp, phù hợp với mọi nhu cầu từ mua sắm, học tập, đến khởi nghiệp. Đặc biệt, với các khoản vay thế chấp tài sản (như nhà đất, xe hơi), bạn có thể tiếp cận hạn mức vay lớn hơn với lãi suất ưu đãi, giúp bạn hiện thực hóa các kế hoạch tài chính lớn của mình. Ưu điểm: Lãi suất cạnh tranh, duyệt hồ sơ nhanh, hạn mức vay cao, thời gian trả nợ linh hoạt.",
-                imageUrl: "http://googleusercontent.com/image_generation_content/7",
+                imageFileName: "consumer-loan-collateral.jpg", // Ví dụ tên file ảnh
                 category: "Dịch vụ tài chính"
             },
             {
@@ -593,7 +599,7 @@
                 name: "SIM số",
                 description: "Lựa chọn SIM số phù hợp với phong thủy, cá tính hoặc nhu cầu kinh doanh của bạn.",
                 longDescription: "Kho SIM số đa dạng của chúng tôi bao gồm các loại SIM số đẹp, SIM phong thủy, SIM tứ quý, ngũ quý, lộc phát, thần tài và nhiều loại khác, phù hợp với mọi nhu cầu cá nhân hay kinh doanh. Chúng tôi cam kết cung cấp SIM chính chủ, thủ tục nhanh gọn, giúp bạn sở hữu số điện thoại ưng ý và may mắn. Lựa chọn: SIM VIP, SIM phong thủy, SIM theo yêu cầu, hỗ trợ đăng ký chính chủ.",
-                imageUrl: "http://googleusercontent.com/image_generation_content/8",
+                imageFileName: "sim-card.jpg", // Ví dụ tên file ảnh
                 category: "Viễn thông & Ngân hàng"
             },
             {
@@ -601,7 +607,7 @@
                 name: "Tài khoản ngân hàng OCB, BIDV",
                 description: "Mở tài khoản ngân hàng dễ dàng tại các ngân hàng uy tín hàng đầu như OCB, BIDV và nhiều ngân hàng khác.",
                 longDescription: "Chúng tôi hỗ trợ khách hàng mở tài khoản ngân hàng tại các tổ chức tài chính hàng đầu như OCB, BIDV và nhiều ngân hàng uy tín khác. Dịch vụ bao gồm tư vấn chọn gói tài khoản phù hợp (tiết kiệm, thanh toán, ưu đãi), hỗ trợ thủ tục nhanh gọn, và cung cấp thông tin chi tiết về các tiện ích như internet banking, mobile banking, thẻ thanh toán, đảm bảo sự tiện lợi tối đa cho bạn. Tiện ích: Internet Banking, Mobile Banking, Thẻ ATM/Visa/MasterCard, ưu đãi phí giao dịch.",
-                imageUrl: "http://googleusercontent.com/image_generation_content/0",
+                imageFileName: "bank-accounts.jpg", // Ví dụ tên file ảnh
                 category: "Viễn thông & Ngân hàng"
             },
             {
@@ -609,7 +615,7 @@
                 name: "Phụ kiện điện thoại",
                 description: "Đa dạng phụ kiện chất lượng cao, bảo vệ và nâng cao trải nghiệm sử dụng điện thoại của bạn.",
                 longDescription: "Chúng tôi cung cấp đầy đủ các loại phụ kiện điện thoại chính hãng và chất lượng cao như ốp lưng, kính cường lực, sạc dự phòng, tai nghe, cáp sạc, gậy selfie... Các sản phẩm được lựa chọn kỹ lưỡng, đảm bảo độ bền và tính tương thích cao, giúp bảo vệ thiết bị và tối ưu hóa trải nghiệm sử dụng của bạn. Sản phẩm: Ốp lưng, kính cường lực, sạc dự phòng, tai nghe, cáp sạc, thiết bị Bluetooth.",
-                imageUrl: "http://googleusercontent.com/image_generation_content/2",
+                imageFileName: "phone-accessories.jpg", // Ví dụ tên file ảnh
                 category: "Thiết bị điện tử"
             },
             {
@@ -617,7 +623,7 @@
                 name: "Điện thoại",
                 description: "Cung cấp các dòng điện thoại mới nhất, đáp ứng mọi nhu cầu từ học tập, làm việc đến giải trí.",
                 longDescription: "Chúng tôi là đối tác của các thương hiệu điện thoại hàng đầu thế giới, mang đến cho bạn những mẫu smartphone mới nhất với đa dạng cấu hình, tính năng và mức giá. Từ điện thoại phổ thông đến các dòng cao cấp, chúng tôi đảm bảo cung cấp sản phẩm chính hãng, bảo hành uy tín và dịch vụ hậu mãi chu đáo. Thương hiệu: Samsung, iPhone, Oppo, Xiaomi, Vivo. Mẫu mã đa dạng, bảo hành chính hãng.",
-                imageUrl: "http://googleusercontent.com/image_generation_content/9",
+                imageFileName: "smartphones.jpg", // Ví dụ tên file ảnh
                 category: "Thiết bị điện tử"
             },
             {
@@ -625,7 +631,7 @@
                 name: "Laptop",
                 description: "Cung cấp các dòng laptop mới nhất, đáp ứng mọi nhu cầu từ học tập, làm việc đến giải trí.",
                 longDescription: "Cửa hàng chúng tôi chuyên cung cấp các loại laptop từ văn phòng, học tập đến gaming, đồ họa, từ các thương hiệu uy tín. Mỗi chiếc laptop đều được kiểm tra kỹ lưỡng về chất lượng, hiệu năng và được bảo hành chính hãng. Chúng tôi cam kết mang đến cho bạn sản phẩm phù hợp nhất với nhu cầu và ngân sách, cùng với dịch vụ hỗ trợ kỹ thuật tận tình. Loại hình: Laptop văn phòng, gaming, đồ họa, siêu mỏng nhẹ. Cấu hình đa dạng, bảo hành dài hạn.",
-                imageUrl: "http://googleusercontent.com/image_generation_content/10",
+                imageFileName: "laptops.jpg", // Ví dụ tên file ảnh
                 category: "Thiết bị điện tử"
             },
             {
@@ -633,7 +639,7 @@
                 name: "Bán Xe Hơi",
                 description: "Hỗ trợ tìm kiếm và sở hữu chiếc xe hơi ưng ý.",
                 longDescription: "Dịch vụ bán xe hơi của chúng tôi bao gồm tư vấn lựa chọn xe phù hợp với nhu cầu và ngân sách, hỗ trợ thủ tục mua bán, đăng ký xe, và các dịch vụ hậu mãi. Chúng tôi cung cấp đa dạng các dòng xe từ xe đã qua sử dụng đến xe mới, đảm bảo nguồn gốc rõ ràng, chất lượng được kiểm định, giúp bạn an tâm sở hữu chiếc xe mơ ước. Dịch vụ: Tư vấn mua xe, hỗ trợ vay mua xe, đăng ký, đăng kiểm, bảo dưỡng sau bán.",
-                imageUrl: "http://googleusercontent.com/image_generation_content/1",
+                imageFileName: "car-sales.jpg", // Ví dụ tên file ảnh
                 category: "Khác"
             }
         ];
@@ -691,11 +697,12 @@
         // --- Application State and Logic (using vanilla JS) ---
         let activeCategory = 'Tất cả';
         let searchTerm = '';
-        let selectedService = null;
+        let selectedService = null; // Holds the currently selected service for detail view
         let isAIChatOpen = false;
         let isComparisonModalOpen = false;
         let openFaqId = null;
         let isNavOpen = false; // For mobile hamburger menu
+        let currentView = 'home'; // 'home' or 'service-detail'
 
         let generatedServiceBenefits = null;
         let isGeneratingBenefits = false;
@@ -726,6 +733,41 @@
 
         // --- Render Functions ---
 
+        function renderAppView() {
+            // Hide all main sections first
+            hideElement('hero-section');
+            hideElement('about-us-section');
+            hideElement('search-bar-section');
+            hideElement('categories-nav-section');
+            hideElement('category-banner');
+            hideElement('services-grid');
+            hideElement('service-detail-view'); // The new detail "page"
+            hideElement('process-section');
+            hideElement('testimonials-section');
+            hideElement('faq-section');
+            hideElement('contact-form-section');
+
+            if (currentView === 'home') {
+                showElement('hero-section');
+                showElement('about-us-section');
+                showElement('search-bar-section');
+                showElement('categories-nav-section');
+                renderCategoryBanner(); // Ensure banner is rendered for home view
+                showElement('services-grid');
+                showElement('process-section');
+                showElement('testimonials-section');
+                showElement('faq-section');
+                showElement('contact-form-section');
+                renderServices(); // Re-render services for home view
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top when returning home
+            } else if (currentView === 'service-detail') {
+                showElement('service-detail-view');
+                // Other sections remain hidden, but floating buttons still visible
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Scroll to top of detail view
+            }
+            renderFloatingButtonsVisibility(); // Control floating buttons visibility
+        }
+
         function renderServices() {
             const servicesGrid = document.getElementById('services-grid');
             servicesGrid.innerHTML = ''; // Clear previous services
@@ -746,11 +788,11 @@
             filteredServices.forEach(service => {
                 const serviceCard = document.createElement('div');
                 serviceCard.className = "bg-white rounded-2xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-300 ease-in-out overflow-hidden flex flex-col cursor-pointer border border-gray-100";
-                serviceCard.onclick = () => openServiceModal(service);
+                serviceCard.onclick = () => openServiceDetail(service); // Use openServiceDetail function
 
                 serviceCard.innerHTML = `
                     <div class="w-full h-56 md:h-64 overflow-hidden rounded-t-2xl bg-gray-200">
-                        <img src="${service.imageUrl}" alt="${service.name}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/333333?text=${encodeURIComponent(service.name)}';" />
+                        <img src="${BASE_IMAGE_REPO_URL}${service.imageFileName}?raw=true" alt="${service.name}" class="w-full h-full object-cover transition-transform duration-300 hover:scale-110" onerror="this.onerror=null; this.src='https://placehold.co/600x400/cccccc/333333?text=${encodeURIComponent(service.name)}';" />
                     </div>
                     <div class="p-6 flex-grow flex flex-col justify-between">
                         <h2 class="text-2xl font-bold text-gray-900 mb-3">${service.name}</h2>
@@ -889,6 +931,18 @@
             });
         }
 
+        function renderFloatingButtonsVisibility() {
+            if (currentView === 'home') {
+                showElement('open-ai-chat-button');
+                showElement('open-comparison-modal-button');
+                showElement('scroll-to-top-button');
+            } else { // service-detail view
+                hideElement('open-ai-chat-button');
+                hideElement('open-comparison-modal-button');
+                hideElement('scroll-to-top-button');
+            }
+        }
+
 
         // --- Event Handlers ---
 
@@ -913,11 +967,14 @@
         });
 
         window.addEventListener('scroll', () => {
-            const show = window.pageYOffset > 300;
-            if (show) {
-                showElement('scroll-to-top-button');
-            } else {
-                hideElement('scroll-to-top-button');
+            // Only show/hide scroll-to-top button if we are in 'home' view
+            if (currentView === 'home') {
+                const show = window.pageYOffset > 300;
+                if (show) {
+                    showElement('scroll-to-top-button');
+                } else {
+                    hideElement('scroll-to-top-button');
+                }
             }
         });
 
@@ -1003,14 +1060,15 @@
             }, 300); // Small delay for effect
         }
 
-        function openServiceModal(service) {
+        function openServiceDetail(service) {
             selectedService = service;
-            document.getElementById('modal-service-name').textContent = service.name;
-            document.getElementById('modal-service-image').src = service.imageUrl;
-            document.getElementById('modal-service-image').alt = service.name;
-            document.getElementById('modal-service-long-description').innerHTML = service.longDescription;
+            document.getElementById('view-service-name').textContent = service.name;
+            // Use the constructed URL for the detail image
+            document.getElementById('view-service-image').src = `${BASE_IMAGE_REPO_URL}${service.imageFileName}?raw=true`;
+            document.getElementById('view-service-image').alt = service.name;
+            document.getElementById('view-service-long-description').innerHTML = service.longDescription;
 
-            // Reset AI related fields in modal
+            // Reset AI related fields in detail view
             generatedServiceBenefits = null;
             isGeneratingBenefits = false;
             specificServiceQuestion = '';
@@ -1020,21 +1078,21 @@
             hideElement('specific-service-answer-container');
             document.getElementById('specific-service-question-input').value = '';
 
-            showElement('service-detail-modal');
+            currentView = 'service-detail';
+            renderAppView(); // Render the new view
         }
 
-        function closeServiceModal() {
+        function closeServiceDetail() {
             selectedService = null;
-            hideElement('service-detail-modal');
             generatedServiceBenefits = null;
             isGeneratingBenefits = false;
             specificServiceQuestion = '';
             specificServiceAnswer = null;
             isAskingSpecificService = false;
-            hideElement('generated-benefits-container');
-            hideElement('specific-service-answer-container');
-            document.getElementById('specific-service-question-input').value = '';
+            currentView = 'home';
+            renderAppView(); // Go back to home view
         }
+
 
         async function generateKeyBenefits(longDescription) {
             isGeneratingBenefits = true;
@@ -1186,9 +1244,10 @@
             hideElement('service-comparison-modal');
         });
 
-        // Event listener for modal buttons
-        document.getElementById('close-service-modal').addEventListener('click', closeServiceModal);
-        document.getElementById('close-service-modal-bottom').addEventListener('click', closeServiceModal);
+        // Event listener for view buttons
+        document.getElementById('back-to-services-button').addEventListener('click', closeServiceDetail);
+        document.getElementById('close-service-view-bottom').addEventListener('click', closeServiceDetail);
+
         document.getElementById('generate-benefits-button').addEventListener('click', () => {
             if (selectedService) {
                 generateKeyBenefits(selectedService.longDescription);
@@ -1410,7 +1469,7 @@
                     comparisonResultContent.innerHTML = text.replace(/\n/g, '<br/>');
                     comparisonResultContainer.classList.remove('hidden');
                 } else {
-                    comparisonResultContent.textContent = 'Không thể tạo so sánh lúc này. Vui lòng thử lại sau.';
+                    comparisonResultContent.textContent = 'Không thể tạo so sánh lúc này. Vui lòng thử lại.';
                     comparisonResultContainer.classList.remove('hidden');
                 }
             } catch (error) {
@@ -1450,9 +1509,8 @@
 
         // Function to run when the window loads
         window.onload = () => {
-            renderServices();
+            renderAppView(); // Initial render based on currentView
             renderCategoriesNav();
-            renderCategoryBanner();
             renderProcessSteps();
             renderFAQs();
             // Firebase init and testimonial fetching handled by useEffect-like logic inside module script
