@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giải Pháp Tài Chính Toàn Diện Cho Tương Lai Của Bạn</title>
+    <title>Giải Pháp Toàn Diện Cho Tương Lai Của Bạn</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -61,6 +61,31 @@
         .prose strong {
             font-weight: bold;
         }
+
+        /* Adjustments for fixed buttons to prevent overlap on small screens */
+        @media (max-width: 767px) { /* Below md breakpoint */
+            #open-ai-chat-button {
+                bottom: 130px; /* Slightly higher for better separation */
+                left: 20px;
+                right: auto; /* Ensure it's not right-aligned */
+                transform: none; /* Remove any horizontal transform */
+            }
+            #open-comparison-modal-button {
+                bottom: 75px; /* Moved higher than scroll-to-top and aligned to the right */
+                left: auto; /* Remove left-50% centering */
+                right: 20px; /* Align to right */
+                transform: none; /* Remove transformX to prevent horizontal overlap */
+            }
+            #scroll-to-top-button {
+                bottom: 20px; /* Keep closer to bottom, aligned to the right */
+                right: 20px;
+            }
+        }
+
+        /* Ensure enough padding at the bottom of the body so fixed elements don't hide content */
+        body {
+            padding-bottom: 150px; /* Adjust as needed based on fixed element heights */
+        }
     </style>
 </head>
 <body>
@@ -78,7 +103,7 @@
             <div class="absolute inset-0 z-0 opacity-20" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
             <div class="relative z-10 animate-fadeIn duration-1000">
                 <h1 class="text-6xl md:text-7xl font-extrabold mb-6 drop-shadow-lg leading-tight">
-                    Giải Pháp Tài Chính Toàn Diện Cho Tương Lai Của Bạn
+                    Giải Pháp Toàn Diện Cho Tương Lai Của Bạn
                 </h1>
                 <p class="text-xl md:text-2xl mb-10 opacity-90 max-w-xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl mx-auto">
                     Chúng tôi cung cấp các dịch vụ tài chính và công nghệ tiên tiến để hỗ trợ cá nhân và doanh nghiệp phát triển bền vững.
@@ -424,7 +449,7 @@
         <!-- Floating AI Assistant Button -->
         <button
             id="open-ai-chat-button"
-            class="fixed bottom-8 left-8 bg-blue-600 text-white p-4 rounded-full shadow-xl hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 z-40 transform hover:scale-110 flex items-center justify-center text-lg font-semibold"
+            class="fixed bottom-[130px] left-5 bg-blue-600 text-white p-4 rounded-full shadow-xl hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 transition-all duration-300 z-40 transform hover:scale-110 flex items-center justify-center text-lg font-semibold"
             title="Trợ lý AI"
         >
             <svg class="w-7 h-7 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -436,7 +461,7 @@
         <!-- Floating Service Comparison Button -->
         <button
             id="open-comparison-modal-button"
-            class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-purple-600 text-white p-4 rounded-full shadow-xl hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-300 z-40 transform hover:scale-110 flex items-center justify-center text-lg font-semibold"
+            class="fixed bottom-[75px] right-5 bg-purple-600 text-white p-4 rounded-full shadow-xl hover:bg-purple-700 focus:outline-none focus:ring-4 focus:ring-purple-300 transition-all duration-300 z-40 transform hover:scale-110 flex items-center justify-center text-lg font-semibold"
             title="So sánh Dịch vụ"
         >
             <svg class="w-7 h-7 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -448,7 +473,7 @@
         <!-- "Back to Top" button -->
         <button
             id="scroll-to-top-button"
-            class="fixed bottom-8 right-8 bg-indigo-600 text-white p-4 rounded-full shadow-xl hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-opacity duration-300 z-40 transform hover:scale-110 hidden"
+            class="fixed bottom-5 right-5 bg-indigo-600 text-white p-4 rounded-full shadow-xl hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 transition-opacity duration-300 z-40 transform hover:scale-110 hidden"
             title="Cuộn lên đầu trang"
         >
             <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -971,7 +996,7 @@
                 renderServices();
                 hideElement('loading-spinner'); // Hide spinner after rendering
                 window.scrollTo({ top: 0, behavior: 'smooth' });
-                if (window.innerWidth <= 768) { // For small screens (md breakpoint)
+                if (window.innerWidth <= 767) { // Below md breakpoint
                     isNavOpen = false;
                     renderCategoriesNav(); // Close mobile nav
                 }
